@@ -22,7 +22,11 @@ variable "ssh_key_local_path" {
 
 variable "postgres_version" {
   type    = string
-  default = "15.3"
+  default = "15.2"
+}
+variable "db_name" {
+  type    = string
+  default = "mydb"
 }
 variable "db_instance_class" {
   type    = string

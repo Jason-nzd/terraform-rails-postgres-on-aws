@@ -20,14 +20,17 @@ resource "aws_instance" "ec2_server" {
   associate_public_ip_address = true
   subnet_id                   = aws_subnet.sn-public-1.id
   vpc_security_group_ids      = [aws_security_group.sg_web_server.id]
+
   user_data = templatefile("install_web.sh", {
     ami         = data.aws_ami.latest-amazon-linux.id
     db_endpoint = aws_db_instance.default.endpoint
     db_username = var.db_username
+    db_password = var.db_password
+    db_name     = var.db_name
   })
 
   tags = {
-    Name = "Web Server"
+    Name = "Rails Server"
   }
 }
 
@@ -43,7 +46,7 @@ resource "aws_db_subnet_group" "default" {
 resource "aws_db_instance" "default" {
   identifier             = "postgres-server"
   allocated_storage      = 5
-  db_name                = "mydb"
+  db_name                = var.db_name
   engine                 = "postgres"
   engine_version         = var.postgres_version
   instance_class         = var.db_instance_class
