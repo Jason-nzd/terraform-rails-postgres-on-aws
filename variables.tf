@@ -4,6 +4,24 @@ variable "aws_region" {
   default     = "ap-southeast-2"
 }
 
+variable "project_name" {
+  description = "This name will be prefixed or suffixed to most resource names"
+  type        = string
+  default     = "rails"
+}
+
+variable "vpc-full-cidr" {
+  description = "CIDR range for VPC"
+  type        = string
+  default     = "10.19.0.0/16"
+}
+
+variable "num_subnets" {
+  description = "Number of subnets to place into each public/private tier"
+  type        = number
+  default     = 3
+}
+
 variable "ec2_instance_type" {
   description = "EC2 instance type/size"
   type        = string
@@ -24,10 +42,6 @@ variable "postgres_version" {
   type    = string
   default = "15.2"
 }
-variable "db_name" {
-  type    = string
-  default = "mydb"
-}
 variable "db_instance_class" {
   type    = string
   default = "db.t3.micro"
@@ -41,5 +55,3 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
-
-
