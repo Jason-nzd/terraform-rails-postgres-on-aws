@@ -1,6 +1,6 @@
 output "db_endpoint" {
   description = "Endpoint for the DB Server"
-  value       = aws_db_instance.default.endpoint
+  value       = aws_db_instance.postgres.endpoint
 }
 
 output "ec2_http_address" {
