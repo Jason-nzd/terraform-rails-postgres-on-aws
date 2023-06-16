@@ -1,7 +1,7 @@
-resource "aws_security_group" "sg_postgres" {
-  name        = "SG Postgres"
-  description = "Allows Postgres 5432"
-  vpc_id      = aws_vpc.rails_vpc.id
+resource "aws_security_group" "postgres" {
+  name        = "${var.project_name}-postgres"
+  description = "Allows Postgres Port 5432"
+  vpc_id      = aws_vpc.vpc.id
 
   ingress {
     from_port   = 5432
@@ -21,11 +21,17 @@ resource "aws_security_group" "sg_postgres" {
   }
 }
 
-resource "aws_security_group" "sg_web_server" {
-  name        = "SG Web Server With SSH"
-  description = "Allows SSH 22 HTTP 80 HTTPS 443"
-  vpc_id      = aws_vpc.rails_vpc.id
+resource "aws_security_group" "web_server" {
+  name        = "${var.project_name}-web-server"
+  description = "Allows SSH 22 to specific IP, and HTTP 80 HTTPS 443 to all"
+  vpc_id      = aws_vpc.vpc.id
 
+  ingress {
+    from_port   = 22
+    protocol    = "tcp"
+    to_port     = 22
+    cidr_blocks = ["${chomp(data.http.myip.response_body)}/32"]
+  }
   ingress {
     from_port   = 22
     protocol    = "tcp"
