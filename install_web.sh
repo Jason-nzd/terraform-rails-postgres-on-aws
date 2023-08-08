@@ -16,12 +16,12 @@ cd myapp
 sed -i "s/#host: localhost/host: ${db_endpoint}/g" config/database.yml
 
 # Set DB username in config/database.yml
-sed -i "23 i username: ${db_username}" config/database.yml
+sed -i "23 i \ \ username: ${db_username}" config/database.yml
 
 # Set DB password to ENV, then ENV to config/database.yml
 echo "export MYAPP_DATABASE_PASSWORD=${db_password}" >> ~/.bashrc
 source ~/.bashrc
-sed -i "24 i password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>" config/database.yml
+sed -i "24 i \ \ password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>" config/database.yml
 
 # Set DB name in config/database.yml
 sed -i "s/database: myapp_development/database: ${db_name}/g" config/database.yml
